@@ -49,6 +49,7 @@ def forward_to_chat(update, context):
 		}
 	}"""
 	forwarded = update.message.forward(chat_id=TELEGRAM_SUPPORT_CHAT_ID)
+	jsonFrwd = json.dumps(forwarded.__dict__)
 	if not forwarded.forward_from:
 		context.bot.send_message(
 			chat_id=TELEGRAM_SUPPORT_CHAT_ID,
@@ -58,12 +59,7 @@ def forward_to_chat(update, context):
 		context.bot.send_message(
 			chat_id=TELEGRAM_SUPPORT_CHAT_ID,
 			reply_to_message_id=forwarded.message_id,
-			text=json.dumps(update.message.__dict__)
-		)
-		context.bot.send_message(
-			chat_id=TELEGRAM_SUPPORT_CHAT_ID,
-			reply_to_message_id=forwarded.message_id,
-			text=json.dumps(forwarded.__dict__)
+			text=f'{jsonFrwd}'
 		)
 
 
