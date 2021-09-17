@@ -1,4 +1,3 @@
-import json
 import os
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
@@ -54,16 +53,6 @@ def forward_to_chat(update, context):
 			chat_id=TELEGRAM_SUPPORT_CHAT_ID
 			,reply_to_message_id=forwarded.message_id
 			,text=f'{update.message.from_user.id}\n#{update.message.from_user.id}\n{REPLY_TO_THIS_MESSAGE}'
-		)
-		context.bot.send_message(
-			chat_id=TELEGRAM_SUPPORT_CHAT_ID,
-			reply_to_message_id=forwarded.message_id,
-			text=update.message.to_dict()
-		)
-		context.bot.send_message(
-			chat_id=TELEGRAM_SUPPORT_CHAT_ID,
-			reply_to_message_id=forwarded.message_id,
-			text=forwarded.to_dict()
 		)
 
 
@@ -132,6 +121,10 @@ def forward_to_user(update, context):
 		}
 	}"""
 	user_id = None
+	context.bot.send_message(
+		chat_id=TELEGRAM_SUPPORT_CHAT_ID,
+		text=update.message.to_dict()
+	)
 	if update.message.reply_to_message.forward_from:
 		user_id = update.message.reply_to_message.forward_from.id
 	elif REPLY_TO_THIS_MESSAGE in update.message.reply_to_message.text:
